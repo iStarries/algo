@@ -723,6 +723,7 @@ public class Main {
         int k = 0, i = l, j = mid + 1;
 
         while (i <= mid && j <= r){
+            //为了归并排序的稳定性，if条件要写成如下方式
             if(q[i] <= q[j]){
                 temp[k++] = q[i++];
             }else{

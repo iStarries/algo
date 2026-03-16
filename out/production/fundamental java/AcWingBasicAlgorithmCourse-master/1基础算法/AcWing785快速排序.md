@@ -1118,5 +1118,43 @@ public static void quickSort(int[] q, int l, int r){
 
 下一步最合适的是：我给你出一个**“挖空版快排模板默写题”**，你自己填空练一次。
 
+```java
+import java.util.*;
+import java.io.*;
+
+public class Main{
+    public static void main(String[] args) throws IOException{
+        BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
+        int n = Integer.parseInt(in.readLine());
+        int[] q = new int[n];
+        String[] s = in.readLine().split(" ");
+        for(int i = 0; i < n; i++){
+            q[i] = Integer.parseInt(s[i]);
+        }
+        quickSort(q, 0, n - 1);
+        for(int i = 0; i < n; i++){
+            System.out.print(q[i] + " ");
+        }
+        in.close();
+    }
+    
+    public static void quickSort(int[] q, int l, int r){
+        if(l >= r) return; 
+        int i = l - 1, j = r + 1, x = q[l + r >> 1];
+        while (i < j){
+            //这里绝对不能写等号，不然遇到元素全相等的数组的时候i就会越界
+            do i++; while(q[i] < x);
+            do j--; while(q[j] > x);
+            if(i < j) {
+                int t = q[i];
+                q[i] = q[j];
+                q[j] = t;
+            }
+        }
+        quickSort(q, l, j);
+        quickSort(q, j + 1, r);
+    }
+}
+```
 
 
