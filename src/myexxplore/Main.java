@@ -1,45 +1,44 @@
 package myexxplore;
 
-import java.io.*;
+import java.util.ArrayList;
+import java.util.List;
 
-public class Main {
-    public static void main(String[] args) throws IOException {
-        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
-        String s = bufferedReader.readLine();
-        int len = s.length();
-        char[] s1 = s.toCharArray();
-        int[] n1 = new int[100010];
-        for (int i = 0; i < len; i++) {
-            n1[i] = s1[len - i - 1] - '0';
+class Main{
+    public static void main(String[] args){
+        Scanner sc = new Scanner(System.in);
+        String sa = sc.next();
+        String sb = sc.next();
+        int la = sa.length();
+        int lb = sb.length();
+        int[] a = new int[la];
+        int[] b = new int[lb];
+        List<Integer> c = new ArrayList<>();
+        for(int i = la - 1, k = 0; i >= 0; i--, k++){
+            a[k] = sa.charAt(i) - '0';
         }
-        s = bufferedReader.readLine();
-        len = s.length();
-        s1 = s.toCharArray();
-        int[] n2 = new int[100010];
-        for (int i = 0; i < len; i++) {
-            n2[i] = s1[len - i - 1] - '0';
+        for(int i = lb - 1, k = 0; i >= 0; i--, k++){
+            b[k] = sb.charAt(i) - '0';
         }
-        int[] res = new int[100010];
+        // 加法中 a 的长度 大于等于 b 的长度
+        if(la > lb) c = add(a, b);
+        else c = add(b, a);
+        for(int i = c.size() - 1; i >= 0; i--){
+            System.out.print(c.get(i));
+        }
 
-        int i = 0;
-        for (; i < 100009; i++) {
-            int t = n1[i] + n2[i];
-            res[i] += t % 10;
-            res[i + 1] += t / 10;
+    }
+    public static List<Integer> add(int[] a, int[] b){
+        List<Integer> c = new ArrayList<>();
+        // 加法，只需要记录进位
+        int t = 0;
+        for(int i = 0; i < a.length; i++){
+            t += a[i];
+            if(i < b.length) t += b[i];
+            c.add(t % 10);
+            t /= 10;
         }
-        int start = 100009;
-        for (int j = 100009; j >= 0; j--) {
-            if (res[j] == 0){
-                start = j;
-            }
-            else break;
-        }
-        if (start == 0){
-            System.out.println(0);
-            return;
-        }
-        for (int j = start - 1; j >= 0; j--) {
-            System.out.print(res[j]);
-        }
+        // 最后以防还有进位
+        if(t > 0) c.add(t);
+        return c;
     }
 }
