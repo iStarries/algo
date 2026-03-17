@@ -691,6 +691,7 @@ class Main {
             } else {
                 res[i] = 0;
             }
+
         }
         int start;
         for (start = 0; start < res.length - 1; start++) {
