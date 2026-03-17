@@ -20,6 +20,18 @@ class Employee {
     private String name;
     private double sal;
     private MyDate date;
+    private int id;
+
+    public Employee(String name, double sal) {
+        this.name = name;
+        this.sal = sal;
+    }
+
+    public Employee(String name, double sal, int id) {
+        this.name = name;
+        this.sal = sal;
+        this.id = id;
+    }
 
     public Employee(String name, double sal, MyDate date) {
         this.name = name;
@@ -31,8 +43,42 @@ class Employee {
     public String toString() {
         return "Employee{" +
                 "name='" + name + '\'' +
+                ", sal=" + sal +
                 ", date=" + date +
+                ", id=" + id +
                 '}';
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public double getSal() {
+        return sal;
+    }
+
+    public void setSal(double sal) {
+        this.sal = sal;
+    }
+
+    public MyDate getDate() {
+        return date;
+    }
+
+    public void setDate(MyDate date) {
+        this.date = date;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     @Override
@@ -44,10 +90,6 @@ class Employee {
                 date.equals(employee.date);
     }
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(name, date.hashCode());
-    }
 }
 
 class MyDate {

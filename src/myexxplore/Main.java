@@ -1,44 +1,39 @@
 package myexxplore;
 
-import java.util.ArrayList;
-import java.util.List;
-
-class Main{
-    public static void main(String[] args){
-        Scanner sc = new Scanner(System.in);
-        String sa = sc.next();
-        String sb = sc.next();
-        int la = sa.length();
-        int lb = sb.length();
-        int[] a = new int[la];
-        int[] b = new int[lb];
-        List<Integer> c = new ArrayList<>();
-        for(int i = la - 1, k = 0; i >= 0; i--, k++){
-            a[k] = sa.charAt(i) - '0';
-        }
-        for(int i = lb - 1, k = 0; i >= 0; i--, k++){
-            b[k] = sb.charAt(i) - '0';
-        }
-        // 加法中 a 的长度 大于等于 b 的长度
-        if(la > lb) c = add(a, b);
-        else c = add(b, a);
-        for(int i = c.size() - 1; i >= 0; i--){
-            System.out.print(c.get(i));
-        }
-
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+class Main {
+    public static void main(String[] args) throws IOException {
+        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
+        String s1 = bufferedReader.readLine();
+        String s2 = bufferedReader.readLine();
+        div(s1, s2);
     }
-    public static List<Integer> add(int[] a, int[] b){
-        List<Integer> c = new ArrayList<>();
-        // 加法，只需要记录进位
-        int t = 0;
-        for(int i = 0; i < a.length; i++){
-            t += a[i];
-            if(i < b.length) t += b[i];
-            c.add(t % 10);
-            t /= 10;
+    public static void div(String s1, String s2) {
+        int[] ints1 = new int[s1.length()];
+        int int2 = Integer.parseInt(s2);
+        int[] res = new int[s1.length()];
+
+        for (int i = 0, j = 0; i < s1.length(); i++) {
+            ints1[i] = s1.charAt(i) - '0';
         }
-        // 最后以防还有进位
-        if(t > 0) c.add(t);
-        return c;
+        int sum = 0;
+        for (int i = 0; i < ints1.length; i++) {
+            sum = sum * 10 + ints1[i];
+            if (sum >= int2) {
+                res[i] = sum / int2;
+                sum %= int2;
+            } else {
+                res[i] = 0;
+            }
+        }
+        int start;
+        for (start = 0; start < res.length - 1; start++) {
+            if (res[start] != 0) break;
+        }
+        while (start < res.length) System.out.print(res[start++]);
+        System.out.println("\n" + sum);
     }
 }
+
