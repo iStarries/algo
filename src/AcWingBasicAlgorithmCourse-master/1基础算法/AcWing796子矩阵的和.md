@@ -82,3 +82,39 @@ public class Main{
     }
 }
 ```
+
+
+
+```java
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+class Main {
+    public static void main(String[] args) throws IOException {
+        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
+        String[] s1 = bufferedReader.readLine().split(" ");
+        int n = Integer.parseInt(s1[0]);
+        int m = Integer.parseInt(s1[1]);
+        int q = Integer.parseInt(s1[2]);
+        int[][] arrs = new int[n + 1][m + 1];
+        int[][] res = new int[n + 1][m + 1];
+        for (int i = 1; i <= n; i++) {
+            String[] s2 = bufferedReader.readLine().split(" ");
+            for (int j = 1; j <= m; j++) {
+                arrs[i][j] = Integer.parseInt(s2[j - 1]);
+                res[i][j] = arrs[i][j] + res[i - 1][j] + res[i][j - 1] - res[i - 1][j - 1];
+            }
+        }
+        String[] s;
+        while (q > 0){
+            q--;
+            s = bufferedReader.readLine().split(" ");
+            int x1 = Integer.parseInt(s[0]);
+            int y1 = Integer.parseInt(s[1]);
+            int x2 = Integer.parseInt(s[2]);
+            int y2 = Integer.parseInt(s[3]);
+            System.out.println(res[x2][y2] - res[x2][y1 - 1] - res[x1 - 1][y2] + res[x1 - 1][y1 - 1]);
+        }
+    }
+}
+```
