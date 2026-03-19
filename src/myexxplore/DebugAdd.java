@@ -5,3 +5,6 @@ public class DebugAdd {
     }
 }
 
+class A{
+
+}

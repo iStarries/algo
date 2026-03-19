@@ -77,3 +77,47 @@ public class Main{
     }
 }
 ```
+
+
+
+```java
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+class Main {
+    public static void main(String[] args) throws IOException {
+        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
+        String[] s1 = bufferedReader.readLine().split(" ");
+
+        int n = Integer.parseInt(s1[0]);
+        int m = Integer.parseInt(s1[1]);
+
+        String[] s2 = bufferedReader.readLine().split(" ");
+        int[] ints = new int[s2.length];
+        int[] res = new int[s2.length];
+
+        for (int i = 0; i < s2.length; i++) {
+            //如果输入是 "12"，你这句代码error
+            //ints[i] = s2[i].charAt(0) - '0';
+            ints[i] = Integer.parseInt(s2[i]);
+
+        }
+        res[0] = ints[0];
+        for (int i = 1; i < s2.length; i++) {
+            res[i] = res[i - 1] + ints[i];
+        }
+
+
+        String[] s;
+        while (m-- > 0){
+            s = bufferedReader.readLine().split(" ");
+            int l = Integer.parseInt(s[0]) - 1;
+            int r = Integer.parseInt(s[1]) - 1;
+            if(l == 0) System.out.println(res[r]);
+            else System.out.println(res[r] - res[l - 1]);
+        }
+
+
+    }
+}
+```
