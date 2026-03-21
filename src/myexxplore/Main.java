@@ -8,30 +8,30 @@ class Main {
         BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
         String[] s1 = bufferedReader.readLine().split(" ");
         int n = Integer.parseInt(s1[0]);
-        int[] arr = new int[n];
-        int[] res = new int[100001];
+        int m = Integer.parseInt(s1[1]);
+        int c = Integer.parseInt(s1[2]);
+        int[] arr1 = new int[n];
+        int[] arr2 = new int[m];
         String[] s2 = bufferedReader.readLine().split(" ");
+        String[] s3 = bufferedReader.readLine().split(" ");
         for (int i = 0; i < n; i++) {
-            arr[i] = Integer.parseInt(s2[i]);
+            arr1[i] = Integer.parseInt(s2[i]);
         }
-        int max = 0;
-        int r = 0, l = 0;
-        while (r < n){
-            //双指针都是只右移
-            res[arr[r]]++;
-            //检查到重复就记录最大值
-            if (res[arr[r]] == 2){
-                //一定持续往右检查重复，因为不一定正好l和r重复
-                max = Math.max(max, r - l);
-                while (res[arr[r]] == 2){
-                    res[arr[l]]--;
-                    l++;
-                }
+        for (int i = 0; i < m; i++) {
+            arr2[i] = Integer.parseInt(s3[i]);
+        }
+
+        int i = 0, j = m - 1;
+        while (true){
+            while (arr1[i] + arr2[j] > c) j--;
+            while (arr1[i] + arr2[j] < c) i++;
+            if(arr1[i] + arr2[j] == c) {
+                System.out.println(i + " " + j);
+                break;
             }
-            r++;
         }
-        max = Math.max(max, r - l);
-        System.out.println(max);
+
+
     }
 }
 
