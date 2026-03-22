@@ -803,62 +803,7 @@ class Main{
 下一步最合适的是：我把“归并排序”和“逆序对统计”两题放在一起，做一个**逐行对比讲解**。
 
 
-
-
-```java
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-
-public class Main {
-    static int N = 100010;
-    static int[] q = new int[N];
-    static int[] temp = new int[N];
-    //逆序对数量可能超出int范围
-    static long count = 0;
-    static int n = 0;
-
-    public static void main(String[] args) throws IOException {
-        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
-        n = Integer.parseInt(bufferedReader.readLine());
-        String[] s = bufferedReader.readLine().split(" ");
-        for (int i = 0; i < n; i++) {
-            q[i] = Integer.parseInt(s[i]);
-        }
-
-        mergeSort(0, n - 1);
-        System.out.println(count);
-    }
-
-    public static void mergeSort(int l, int r) {
-        if (l >= r) return;
-        int mid = l + r >> 1;
-        mergeSort(l, mid);
-        mergeSort(mid + 1, r);
-        int k = 0, i = l, j = mid + 1;
-        while (i <= mid && j <= r){
-            // >= 不符合逆序对定义，需要写成 >
-            if (q[i] >= q[j]){
-                temp[k++] = q[j++];
-                count = count + (mid - i + 1);
-            }else{
-                temp[k++] = q[i++];
-            }
-        }
-        while (i <= mid){
-            temp[k++] = q[i++];
-        }
-        while (j <= r) {
-            temp[k++] = q[j++];
-        }
-        for (k = 0, i = l; i <= r; i++, k++){
-            q[i] = temp[k];
-        }
-
-    }
-}
-```
-这是个非常好的问题。
+# 这是个非常好的问题。
 你现在问的其实不是“代码怎么写”，而是：
 
 **面对“逆序对计数”这类题，怎么从题意想到归并排序？**
@@ -1216,3 +1161,57 @@ else {
 
 如果你愿意，我下一步可以专门给你讲一个内容：
 **“什么题型该想到归并排序，什么题型该想到快速排序”**。这对你建立题感很有帮助。
+
+```java
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+
+public class Main {
+    static int N = 100010;
+    static int[] q = new int[N];
+    static int[] temp = new int[N];
+    //逆序对数量可能超出int范围
+    static long count = 0;
+    static int n = 0;
+
+    public static void main(String[] args) throws IOException {
+        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
+        n = Integer.parseInt(bufferedReader.readLine());
+        String[] s = bufferedReader.readLine().split(" ");
+        for (int i = 0; i < n; i++) {
+            q[i] = Integer.parseInt(s[i]);
+        }
+
+        mergeSort(0, n - 1);
+        System.out.println(count);
+    }
+
+    public static void mergeSort(int l, int r) {
+        if (l >= r) return;
+        int mid = l + r >> 1;
+        mergeSort(l, mid);
+        mergeSort(mid + 1, r);
+        int k = 0, i = l, j = mid + 1;
+        while (i <= mid && j <= r){
+            // >= 不符合逆序对定义，需要写成 >
+            if (q[i] > q[j]){
+                temp[k++] = q[j++];
+                count = count + (mid - i + 1);
+            }else{
+                temp[k++] = q[i++];
+            }
+        }
+        while (i <= mid){
+            temp[k++] = q[i++];
+        }
+        while (j <= r) {
+            temp[k++] = q[j++];
+        }
+        for (k = 0, i = l; i <= r; i++, k++){
+            q[i] = temp[k];
+        }
+
+    }
+}
+```

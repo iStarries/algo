@@ -620,10 +620,11 @@ public class Main {
         int[] res = new int[100010];
 
         int i = 0;
+        int t = 0;
         for (; i < 100009; i++) {
-            int t = n1[i] + n2[i];
-            res[i] += t % 10;
-            res[i + 1] += t / 10;
+            t = n1[i] + n2[i] + t;
+            res[i] = t % 10;
+            t /= 10;
         }
         int start = 100009;
         for (int j = 100009; j >= 0; j--) {

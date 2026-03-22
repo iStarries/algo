@@ -5,32 +5,36 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 class Main {
     public static void main(String[] args) throws IOException {
+        /*
+        输入m  n
+        输入x r,换算x到索引上，做加法
+
+        while n：输入l  r 进行查询输出
+         */
         BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
         String[] s1 = bufferedReader.readLine().split(" ");
         int n = Integer.parseInt(s1[0]);
+        int[] arr = new int[n];
+        int[] res = new int[n];
         int m = Integer.parseInt(s1[1]);
-        int c = Integer.parseInt(s1[2]);
-        int[] arr1 = new int[n];
-        int[] arr2 = new int[m];
-        String[] s2 = bufferedReader.readLine().split(" ");
-        String[] s3 = bufferedReader.readLine().split(" ");
+
+        String[] s2;
+        while (n > 0){
+            s2 = bufferedReader.readLine().split(" ");
+            int x = Integer.parseInt(s2[0]);
+            int c = Integer.parseInt(s2[1]);
+            arr[x] += c;
+            n--;
+        }
         for (int i = 0; i < n; i++) {
-            arr1[i] = Integer.parseInt(s2[i]);
+            res[i]
         }
-        for (int i = 0; i < m; i++) {
-            arr2[i] = Integer.parseInt(s3[i]);
+        while (m > 0){
+            s2 = bufferedReader.readLine().split(" ");
+            int l = Integer.parseInt(s2[0]);
+            int r = Integer.parseInt(s2[1]);
+            m--;
         }
-
-        int i = 0, j = m - 1;
-        while (true){
-            while (arr1[i] + arr2[j] > c) j--;
-            while (arr1[i] + arr2[j] < c) i++;
-            if(arr1[i] + arr2[j] == c) {
-                System.out.println(i + " " + j);
-                break;
-            }
-        }
-
 
     }
 }
