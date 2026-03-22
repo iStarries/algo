@@ -77,11 +77,6 @@ public class Main{
 }
 ```
 
-
-
-
-
-```java
 这题属于**基础算法里的双指针问题**，更准确地说，是**两个有序数组上的“对撞型双指针”**。学习范围上，它正好对应你目录里的第一讲“基础算法”中的**双指针算法**。 
 
 ---
@@ -553,4 +548,39 @@ A[i] + B[j] = x
 1. 为什么 `j` 不用每次重新从 `m - 1` 开始？
 2. 为什么当和大于 `x` 时，只能让 `j--`，而不能让 `i++`？
 
+```java
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+class Main {
+    public static void main(String[] args) throws IOException {
+        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
+        String[] s1 = bufferedReader.readLine().split(" ");
+        int n = Integer.parseInt(s1[0]);
+        int m = Integer.parseInt(s1[1]);
+        int c = Integer.parseInt(s1[2]);
+        int[] arr1 = new int[n];
+        int[] arr2 = new int[m];
+        String[] s2 = bufferedReader.readLine().split(" ");
+        String[] s3 = bufferedReader.readLine().split(" ");
+        for (int i = 0; i < n; i++) {
+            arr1[i] = Integer.parseInt(s2[i]);
+        }
+        for (int i = 0; i < m; i++) {
+            arr2[i] = Integer.parseInt(s3[i]);
+        }
+
+        int i = 0, j = m - 1;
+        while (true){
+            while (arr1[i] + arr2[j] > c) j--;
+            while (arr1[i] + arr2[j] < c) i++;
+            if(arr1[i] + arr2[j] == c) {
+                System.out.println(i + " " + j);
+                break;
+            }
+        }
+
+
+    }
+}
 ```

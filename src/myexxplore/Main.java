@@ -3,39 +3,46 @@ package myexxplore;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-class Main {
-    public static void main(String[] args) throws IOException {
-        /*
-        输入m  n
-        输入x r,换算x到索引上，做加法
 
-        while n：输入l  r 进行查询输出
-         */
+class Main {
+    /*
+    输入n m
+    输出序列a 和 b
+    双指针遍历：
+        从两个序列的开头开始，长序列中找当前子序列元素，
+            找到了两个指针都后移
+            没找到就长序列指针后移
+            找到子序列的结尾就成功，输出找到了
+            一直都没成功，就循环到长序列遍历结束，输出没找到
+
+     */
+    public static void main(String[] args) throws IOException {
         BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
         String[] s1 = bufferedReader.readLine().split(" ");
         int n = Integer.parseInt(s1[0]);
-        int[] arr = new int[n];
-        int[] res = new int[n];
         int m = Integer.parseInt(s1[1]);
+        int[] a = new int[n];
+        int[] b = new int[m];
 
-        String[] s2;
-        while (n > 0){
-            s2 = bufferedReader.readLine().split(" ");
-            int x = Integer.parseInt(s2[0]);
-            int c = Integer.parseInt(s2[1]);
-            arr[x] += c;
-            n--;
-        }
+        s1 = bufferedReader.readLine().split(" ");
         for (int i = 0; i < n; i++) {
-            res[i]
+            a[i] = Integer.parseInt(s1[i]);
         }
-        while (m > 0){
-            s2 = bufferedReader.readLine().split(" ");
-            int l = Integer.parseInt(s2[0]);
-            int r = Integer.parseInt(s2[1]);
-            m--;
+        s1 = bufferedReader.readLine().split(" ");
+        for (int i = 0; i < m; i++) {
+            b[i] = Integer.parseInt(s1[i]);
         }
-
+        int l = 0, r = 0;
+        for (; r < m; r++){
+            if(a[l] == b[r]){
+                l++;
+                if(l == n){
+                    System.out.println("Yes");
+                    return;
+                }
+            }
+        }
+        System.out.println("No");
     }
 }
 
