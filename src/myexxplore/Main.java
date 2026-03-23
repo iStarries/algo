@@ -5,44 +5,37 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 
 class Main {
-    /*
-    输入n m
-    输出序列a 和 b
-    双指针遍历：
-        从两个序列的开头开始，长序列中找当前子序列元素，
-            找到了两个指针都后移
-            没找到就长序列指针后移
-            找到子序列的结尾就成功，输出找到了
-            一直都没成功，就循环到长序列遍历结束，输出没找到
-
-     */
     public static void main(String[] args) throws IOException {
         BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
-        String[] s1 = bufferedReader.readLine().split(" ");
-        int n = Integer.parseInt(s1[0]);
-        int m = Integer.parseInt(s1[1]);
-        int[] a = new int[n];
-        int[] b = new int[m];
+        String[] s = bufferedReader.readLine().split(" ");
+        int n = Integer.parseInt(s[0]);
+        int[] stack = new int[n];
+        int hh = -1;
 
-        s1 = bufferedReader.readLine().split(" ");
+        s = bufferedReader.readLine().split(" ");
         for (int i = 0; i < n; i++) {
-            a[i] = Integer.parseInt(s1[i]);
+            int x = Integer.parseInt(s[i]);
+            hh = res(stack, hh, x);
         }
-        s1 = bufferedReader.readLine().split(" ");
-        for (int i = 0; i < m; i++) {
-            b[i] = Integer.parseInt(s1[i]);
-        }
-        int l = 0, r = 0;
-        for (; r < m; r++){
-            if(a[l] == b[r]){
-                l++;
-                if(l == n){
-                    System.out.println("Yes");
-                    return;
-                }
+    }
+    public static int res(int[] stack, int hh, int x) {
+        while (hh >= 0) {
+            if (stack[hh] >= x) {
+                hh--;
+            }else{
+                break;
             }
         }
-        System.out.println("No");
+        if (hh == -1) {
+            System.out.printf("%d ", -1);
+            stack[++hh] = x;
+            return hh;
+        }else{
+            System.out.printf("%d ", stack[hh]);
+            stack[++hh] = x;
+            return hh;
+        }
+
     }
 }
 
