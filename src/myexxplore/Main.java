@@ -10,32 +10,38 @@ class Main {
         String[] s = bufferedReader.readLine().split(" ");
         int n = Integer.parseInt(s[0]);
         int[] stack = new int[n];
+        int[] arr = new int[n];
+        StringBuilder stringBuilder = new StringBuilder();
         int hh = -1;
+        /*
+        hh 是“栈内下标”
+        stack[hh] 是“原数组下标”
+        a[stack[hh]] 才是值
+        这样分开维护可以保留原始数组的值，同时用栈记住每一个筛选出来的元素对应于原数组的下标，
+        这样不仅可以应付输出值的题目，还可以应付输出位置、距离的题目
 
+        栈要维护成单调栈（这一题是递增的）
+         */
         s = bufferedReader.readLine().split(" ");
         for (int i = 0; i < n; i++) {
             int x = Integer.parseInt(s[i]);
-            hh = res(stack, hh, x);
-        }
-    }
-    public static int res(int[] stack, int hh, int x) {
-        while (hh >= 0) {
-            if (stack[hh] >= x) {
-                hh--;
-            }else{
-                break;
+            while (hh >= 0) {
+                if (arr[stack[hh]] >= x) {
+                    hh--;
+                } else {
+                    break;
+                }
             }
+            if (hh == -1) {
+                //看栈里面有没有存放下标
+                stringBuilder.append("-1 ");
+            } else {
+                stringBuilder.append(arr[stack[hh]] + " ");
+            }
+            stack[++hh] = i;
+            arr[i] = x;
         }
-        if (hh == -1) {
-            System.out.printf("%d ", -1);
-            stack[++hh] = x;
-            return hh;
-        }else{
-            System.out.printf("%d ", stack[hh]);
-            stack[++hh] = x;
-            return hh;
-        }
-
+        System.out.println(stringBuilder.toString());
     }
 }
 
