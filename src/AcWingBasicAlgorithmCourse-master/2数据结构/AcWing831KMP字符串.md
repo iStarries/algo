@@ -1749,53 +1749,50 @@ j = ne[j];
 
 如果你愿意，我下一条直接给你画一个 **“文本串和模式串错位对齐图”**，把“为什么模式串相当于往右滑到那个位置”完整画出来，你会一下子彻底通。
 
-
-
-
 ```java
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
+import java.io.*;
 
 class Main {
-    public static void main(String[] args) throws IOException {
-        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
+  public static void main(String[] args) throws IOException {
+    BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
+    BufferedWriter bufferedWriter = new BufferedWriter(new OutputStreamWriter(System.out));
+    int n = Integer.parseInt(bufferedReader.readLine());
+    // 为了让第一个有效字符放在数组下标 1 位置，在转换前加一个空格
+    char[] part = (" " + bufferedReader.readLine()).toCharArray();
 
-        int n = Integer.parseInt(bufferedReader.readLine());
-        // 为了让第一个有效字符放在数组下标 1 位置，在转换前加一个空格
-        char[] part = (" " + bufferedReader.readLine()).toCharArray();
+    int m = Integer.parseInt(bufferedReader.readLine());
+    char[] text = (" " + bufferedReader.readLine()).toCharArray();
 
-        int m = Integer.parseInt(bufferedReader.readLine());
-        char[] text = (" " + bufferedReader.readLine()).toCharArray();
-
-        int[] next = new int[n + 10];
+    int[] next = new int[n + 10];
 
         /*
          计算 next 数组
          next[i] 表示模式串前 i 个字符的最长相等真前后缀长度
          */
-        for (int j = 0, i = 2; i <= n; i++) {
-            // j != 0 说明当前还能继续回退
-            while (j != 0 && part[j + 1] != part[i]) j = next[j];
+    for (int j = 0, i = 2; i <= n; i++) {
+      // j != 0 说明当前还能继续回退
+      while (j != 0 && part[j + 1] != part[i]) j = next[j];
 
-            // 当前字符可以接在长度为 j 的公共前后缀后面
-            if (part[j + 1] == part[i]) j++;
+      // 当前字符可以接在长度为 j 的公共前后缀后面
+      if (part[j + 1] == part[i]) j++;
 
-            next[i] = j;
-        }
-
-        // KMP 匹配
-        for (int j = 0, i = 1; i <= m; i++) {
-            while (j != 0 && part[j + 1] != text[i]) j = next[j];
-
-            if (part[j + 1] == text[i]) j++;
-
-            if (j == n) {
-                System.out.printf("%d ", i - j);
-                // 继续寻找下一个匹配位置（支持重叠）
-                j = next[j];
-            }
-        }
+      next[i] = j;
     }
+
+    // KMP 匹配
+    for (int j = 0, i = 1; i <= m; i++) {
+      while (j != 0 && part[j + 1] != text[i]) j = next[j];
+
+      if (part[j + 1] == text[i]) j++;
+
+      if (j == n) {
+        bufferedWriter.write(i - j + " ");
+        // 继续寻找下一个匹配位置（支持重叠）
+        j = next[j];
+      }
+    }
+    bufferedWriter.close();
+    bufferedReader.close();
+  }
 }
 ```

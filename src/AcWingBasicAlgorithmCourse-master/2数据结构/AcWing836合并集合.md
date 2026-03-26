@@ -605,7 +605,6 @@ import java.io.InputStreamReader;
 
 class Main {
     public static void main(String[] args) throws IOException {
-        // 创建缓冲输入对象，用来从控制台读取数据
         BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
         String[] s = bufferedReader.readLine().split(" ");
 
@@ -630,9 +629,7 @@ class Main {
                 //合并之前必须先找根节点，不然一个点会出现多个父节点
                 a = find(arr, a);
                 b = find(arr, b);
-                //必须先判断两个根节点a和b不一样（不在同一个集合里）才能修改根节点，
-                //不然自己变成了自己的父节点
-                if (a != b) arr[a] = b;
+                arr[a] = b;
             }else{
                 a = find(arr, a);
                 b = find(arr, b);
