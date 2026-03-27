@@ -630,8 +630,7 @@ class Main {
             add[i][1] = Integer.parseInt(s2[1]);
         }
 //        相当于匿名构造器，重写对比方法，推荐第二个写法
-//        Arrays.sort(add, 0, n, (x1, x2) -> x1[0] - x2[0]);
-        Arrays.sort(add, 0, n, Integer.compare(x1[0], x2[0]));
+        Arrays.sort(add, 0, n, (x1, x2) -> x1[0] - x2[0]);
 
         int  count = 0;
         int right = add[0][1];
