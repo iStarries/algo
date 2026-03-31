@@ -1,50 +1,71 @@
 import java.io.*;
 
 class Main {
-    public static int N = 100003;
     /*
-    定义一个 visit 数组，表示数字 1~n 中每个数字是否已经被使用过。
-    递归函数表示当前在填写排列的第几个位置。
-    在每一层递归中，用 for 循环枚举 1~n，对于每个还没有被访问的数字，都把它放到当前位置，并标记为已访问，然后递归填写下一个位置。
-    当所有位置都填满时，就输出当前排列。
-    递归返回后，要把刚才选择的数字恢复为未访问，继续尝试下一个数字，直到所有情况遍历完为止。
-     */
-    public static StringBuilder val = new StringBuilder();
-    public static int n;
-    public static int idx = 1;
+    按行放置皇后，从第 1 行开始依次搜索。
+
+    val 用来记录当前棋盘状态。
+    col 用来记录某一列是否已经放过皇后。
+    vis 用来记录主对角线是否已经放过皇后。
+    uvis 用来记录副对角线是否已经放过皇后。
+
+    递归时按行进行搜索：
+    如果当前行已经超过 n，说明前 n 行都已经合法放置了皇后，
+    此时输出当前棋盘，并结束这一分支的搜索。
+
+    对于当前行，依次枚举这一行的每一列，
+    判断当前位置所在的列、主对角线、副对角线是否都没有皇后。
+    如果可以放置，就在该位置放上皇后，并标记对应状态，
+    然后递归搜索下一行。
+
+    当下一层递归返回后，需要撤销当前位置的皇后和相关标记，
+    继续尝试当前行的其他列，这个过程就是回溯。
+    */
+    public static int N = 10;
     public static String[] input;
-    public static int[] vis = new int[10];
+    public static int[] vis = new int[N * 2];
+    public static int[] col = new int[N * 2];
+    public static int[] uvis = new int[N * 2];
+    public static char[][] val = new char[N * 2][N * 2];
 
     public static void main(String[] args) throws IOException {
         BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
         BufferedWriter bufferedWriter = new BufferedWriter(new OutputStreamWriter(System.out));
         input = bufferedReader.readLine().split(" ");
-        n = Integer.parseInt(input[0]);
+        int n = Integer.parseInt(input[0]);
+        for (int i = 1; i <= n; i++) {
+            for (int j = 1; j <= n; j++) {
+                val[i][j] = '.';
+            }
+        }
 
-        dfs(idx);
+        dfs(1, n, bufferedWriter);
 
         bufferedReader.close();
         bufferedWriter.close();
     }
-    public static void dfs(int idx) {
-        // 注意满足结束条件，打印输出
-        if (idx == n + 1) {
-            System.out.println(val);
+    public static void dfs(int i, int n, BufferedWriter bufferedWriter) throws IOException {
+        if (i > n){
+            for (int j = 1; j <= n; j++) {
+                for (int k = 1; k <= n; k++) {
+                    bufferedWriter.write(val[j][k]);
+                }
+                bufferedWriter.write("\n");
+            }
+            bufferedWriter.write("\n");
             return;
         }
-        for (int i = 1; i <= n; i++) {
-            if (vis[i] == 0) {
-                vis[i] = 1;
-                //如果不用数组存即将输出的内容，那么为了在回溯的时候删去刚加入的内容就要用setLength方法
-                //因为加入的输出串的不止是数字，还有空格
-                int len = val.length();
-                val.append(i).append(" ");
-                dfs(idx + 1);
-                val.setLength(len);
-                vis[i] = 0;
+        for (int j = 1; j <= n; j++) {
+            if (vis[i - j + N] == 0 && uvis[i + j] == 0 && col[j] == 0) {
+                val[i][j] = 'Q';
+                col[j] = vis[i - j + N] = uvis[i + j] = 1;
+                dfs(i + 1, n, bufferedWriter);
+                val[i][j] = '.';
+                col[j] = vis[i - j + N] = uvis[i + j] = 0;
+            }else{
+                val[i][j] = '.';
             }
         }
-
     }
 
 
