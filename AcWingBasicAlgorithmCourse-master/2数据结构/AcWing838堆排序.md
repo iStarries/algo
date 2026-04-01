@@ -715,7 +715,7 @@ for(int i = n / 2; i > 0; i--) down(i);
 这个也是堆排序里特别容易困惑的一点。
 
 ```java
-
+import java.io.*;
 class Main {
     public static void main(String[] args) throws IOException {
         BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
