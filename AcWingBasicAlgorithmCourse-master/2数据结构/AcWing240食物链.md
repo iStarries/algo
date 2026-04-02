@@ -725,7 +725,8 @@ class Main {
                 }else{
                     if (x == y) res++;
                     else if(px == py){
-                        if ((dist[x] - dist[y]) % 3 != 1) res++;
+                        //“判断等于 1”容易错，而“减 1 后判断是否等于 0”就稳
+                        if ((dist[x] - dist[y] - 1) % 3 !=0) res++;
                     }else{
                         p[px] = py;
                         //x -> px 的关系是 dist[x]
