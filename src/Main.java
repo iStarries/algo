@@ -1,75 +1,50 @@
-import java.io.*;
-import java.util.ArrayDeque;
+import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Queue;
+import java.util.Arrays;
+import java.util.List;
 
-class Main {
-
-    public static String[] input;
-
-    public static int N = 100010;
-    public static int[] distancce = new int[N];
-    public static ArrayList<Integer>[] g = new ArrayList[N];
-    /*
-    用bfs按层搜索
-    用二维动态数字保存节点
-    distancce数组保存每个点到起点的距离
-    bfs用队列保存遍历到的每一层节点
-    每次弹出对头检查是不是目标节点，如果是就返回步数，否则继续扩充队列
-    队列如果检查空了说明结果是-1
-     */
-//    static class Pair{
-//        int x;
-//        int dist;
-//        Pair(int x, int dist){
-//            this.x = x;
-//            this.dist = dist;
-//        }
-//    }
+public class Main {
     public static void main(String[] args) throws IOException {
 
-        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
-        BufferedWriter bufferedWriter = new BufferedWriter(new OutputStreamWriter(System.out));
-
-        // 读取节点数
-        input = bufferedReader.readLine().split("\\s+");
-        int n = Integer.parseInt(input[0]);
-        int m = Integer.parseInt(input[1]);
-
-        for (int i = 1; i <= n; i++) {
-            g[i] = new ArrayList<>();
-        }
-
-        while (m-- > 0){
-            input = bufferedReader.readLine().split("\\s+");
-            int a = Integer.parseInt(input[0]);
-            int b = Integer.parseInt(input[1]);
-            g[a].add(b);
-        }
-
-        //bfs保存每一层的点
-        Queue<Integer> p = new ArrayDeque<>();
-        distancce[1] = 1;
-        p.offer(1);
-        while (!p.isEmpty()){
-            int cur = p.poll();
-            if(cur == n) {
-                bufferedWriter.write(String.valueOf(distancce[cur] - 1));
-                bufferedWriter.close();
-                return;
-            }
-            int dist = distancce[cur];
-
-            for (Integer i : g[cur]) {
-                if(distancce[i] == 0){
-                    p.offer(i);
-                    distancce[i] = 1 + dist;
-                }
-            }
-        }
-        bufferedWriter.write(String.valueOf(-1));
-        bufferedWriter.close();
     }
+}
 
+class Solution {
+    public List<List<Integer>> threeSum(int[] nums) {
+        /*
+        先排序
+        for循环确定一个值i，另外两个值变成两数之和（双指针）
+        更新i的时候去重：不能和上一个i相等，不然只有可能找到相同三元组
+        找到三元组后，对left,right去重，二者都不能和之前的值一样，不然只可能会找到相同三元组
+         */
+        List<List<Integer>> res = new ArrayList<>();
+        Arrays.sort(nums);
+        for (int i = 0; i < nums.length; i++) {
+            //no repeat i
+            if (i > 0 && nums[i] == nums[i - 1]) continue;
+            int left = i + 1, right = nums.length - 1;
+            int target = 0 - nums[i];
 
+            if (left < right) {
+                while (left < right) {
+                    if (nums[left] + nums[right] == target) {
+                        res.add(Arrays.asList(nums[i], nums[left], nums[right]));
+                        left++;
+                        right--;
+                        while (left < right && nums[left] == nums[left - 1]) left++;
+                        while (left < right && nums[right] == nums[right + 1]) right--;
+                    }
+                    //no repeat left & right
+                    else if (nums[left] + nums[right] > target) {
+                        right--;
+                    } else {
+                        left++;
+                    }
+                }
+            } else {
+                continue;
+            }
+        }
+        return res;
+    }
 }
