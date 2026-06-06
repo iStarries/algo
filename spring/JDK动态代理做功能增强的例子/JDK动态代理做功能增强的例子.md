@@ -1,16 +1,3 @@
-<style>
-body {
-  font-family: "PingFang SC", "Microsoft YaHei", "Noto Sans CJK SC", sans-serif;
-  font-size: 14px;
-  line-height: 1.7;
-}
-code, pre {
-  font-family: "JetBrains Mono", "Cascadia Code", monospace;
-}
-</style>
-![img.png](img.png)
-![img_1.png](img_1.png)
-
 这是我在课程上看到的一个例子，利用动态代理增强bean的功能。我想了解动态代理的作用就是增强对象的功能 吗？ 如图代码，代理是怎么使用的？ 最后讲解一下匿名内部类写成lambda表达式是怎么写的。
 
 # 解答：
