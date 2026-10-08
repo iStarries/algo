@@ -1,14 +1,3 @@
----
-AIGC:
-  ContentProducer: '001191110102MAD55U9H0F10002'
-  ContentPropagator: '001191110102MAD55U9H0F10002'
-  Label: '1'
-  ProduceID: '86af31d2-8e71-4eec-9782-a9c3c5983d38'
-  PropagateID: '86af31d2-8e71-4eec-9782-a9c3c5983d38'
-  ReservedCode1: 'e4e6f9aa-e0d5-45bf-b18f-1029c8e92abf'
-  ReservedCode2: 'e4e6f9aa-e0d5-45bf-b18f-1029c8e92abf'
----
-
 # Java集合--Queue
 
 ## 整体表现
@@ -35,5 +24,3 @@ AIGC:
 **第27题** — ArrayDeque 于 JDK1.6 引入，LinkedList 于 JDK1.2 存在；ArrayDeque 插入均摊 O(1)，LinkedList 每次插入需申请新堆空间均摊更慢；性能上选用 ArrayDeque 实现队列更优。
 
 **第28题** — PriorityQueue 于 JDK1.5 引入，优先级最高的元素先出队；底层用可变长数组存储；非线程安全且不支持 NULL 与 non-comparable 对象；默认小顶堆，可传 Comparator 自定义优先级。面试手撕常考堆排序、求第 K 大数等。
-
-> AI生成
