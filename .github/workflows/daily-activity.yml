@@ -1,0 +1,41 @@
+name: Daily activity date
+
+on:
+  # 09:17 and 21:17 in Asia/Shanghai (UTC+8).
+  schedule:
+    - cron: '17 1,13 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: daily-activity-date
+  cancel-in-progress: false
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          ref: master
+      - name: Record today's date
+        env:
+          TZ: Asia/Shanghai
+        run: |
+          set -euo pipefail
+          git pull --ff-only origin master
+          today="$(date +%F)"
+          file=activity-log.md
+          record="最近自动更新日期（北京时间）：${today}"
+          if grep -Fxq "$record" "$file"; then
+            echo "Date already recorded: $today"
+            exit 0
+          fi
+          printf '# 自动活动记录\n\n%s\n' "$record" > "$file"
+          git config user.name 'iStarries'
+          git config user.email 'w18909622321@163.com'
+          git add -- "$file"
+          git commit -m "chore: record activity for $today"
+          git push origin HEAD:master
